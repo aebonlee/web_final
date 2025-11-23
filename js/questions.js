@@ -91,7 +91,61 @@ const questions = [
         question: 'JavaScript에서 변수를 선언하는 키워드가 아닌 것은?',
         options: ['var', 'let', 'const', 'define'],
         answer: 3,
-        explanation: 'JavaScript에서는 var, let, const를 사용하여 변수를 선언합니다. define은 JavaScript의 예약어가 아닙니다.'
+        explanation: 'JavaScript에서는 var, let, const를 사용하여 변수를 선언합니다. define은 JavaScript의 예약어가 아닙니다.',
+        guide: {
+            title: 'JavaScript 변수 선언',
+            content: `
+                <h4>📝 JavaScript 변수 선언 완전 가이드</h4>
+                <p>JavaScript에서 변수를 선언하는 <strong>3가지 키워드</strong>의 차이점을 알아봅시다.</p>
+                
+                <h5>🔹 var (ES5 이전)</h5>
+                <ul>
+                    <li><strong>함수 스코프</strong> - 함수 내에서 선언하면 함수 전체에서 접근</li>
+                    <li><strong>호이스팅</strong> - 선언이 맨 위로 끌어올려짐</li>
+                    <li><strong>재선언 가능</strong> - 같은 이름으로 여러 번 선언 가능</li>
+                </ul>
+                
+                <h5>🔹 let (ES6+)</h5>
+                <ul>
+                    <li><strong>블록 스코프</strong> - {} 내에서만 접근 가능</li>
+                    <li><strong>호이스팅되지만 TDZ</strong> - 선언 전 사용 불가</li>
+                    <li><strong>재선언 불가</strong> - 같은 스코프에서 재선언 에러</li>
+                </ul>
+                
+                <h5>🔹 const (ES6+)</h5>
+                <ul>
+                    <li><strong>블록 스코프</strong> - let과 동일한 스코프</li>
+                    <li><strong>재할당 불가</strong> - 한 번 할당하면 변경 불가</li>
+                    <li><strong>선언 시 초기화 필수</strong> - const name; (에러!)</li>
+                </ul>
+                
+                <div class="code-example">
+                    <h5>💡 실사용 예시</h5>
+                    <pre><code>// var - 함수 스코프
+function example() {
+    if (true) {
+        var x = 1;
+    }
+    console.log(x); // 1 (접근 가능)
+}
+
+// let - 블록 스코프  
+function example() {
+    if (true) {
+        let y = 1;
+    }
+    console.log(y); // Error!
+}
+
+// const - 상수
+const API_URL = 'https://api.example.com';
+// API_URL = 'other'; // Error!</code></pre>
+                </div>
+                
+                <h5>📚 권장사항</h5>
+                <p><strong>const</strong> → <strong>let</strong> → <strong>var</strong> 순으로 우선 사용</p>
+            `
+        }
     },
     {
         id: 4,

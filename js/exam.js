@@ -151,6 +151,7 @@ function displayQuestion(index) {
                 this.classList.add('selected');
                 examAnswers[question.id] = i;
                 updateNavigation();
+                updateScoreTracker();
                 autoSave();
             });
         });
@@ -160,6 +161,7 @@ function displayQuestion(index) {
         textarea.addEventListener('input', function() {
             examAnswers[question.id] = this.value;
             updateNavigation();
+            updateScoreTracker();
             autoSave();
         });
     }
@@ -174,6 +176,9 @@ function displayQuestion(index) {
     
     // 학습 가이드 업데이트
     updateReferenceGuide();
+    
+    // 점수 트래커 업데이트
+    updateScoreTracker();
 }
 
 function updateNavigation() {
@@ -326,14 +331,119 @@ function updateReferenceGuide() {
         `;
         referenceContent.innerHTML = guideContent;
     } else {
-        // 기본 가이드 내용
+        // 기본 가이드 내용 - 문제 유형별 맞춤 가이드
+        const basicGuide = generateBasicGuide(question);
         referenceContent.innerHTML = `
-            <div class="guide-intro">
-                <p>이 문제에 대한 상세한 학습 가이드가 준비되어 있지 않습니다.</p>
-                <p>문제의 해설을 참고하여 학습하세요.</p>
+            <div class="guide-content">
+                <h4>${basicGuide.title}</h4>
+                ${basicGuide.content}
             </div>
         `;
     }
+}
+
+function generateBasicGuide(question) {
+    const questionText = question.question.toLowerCase();
+    
+    // HTML 관련 문제
+    if (questionText.includes('html') || questionText.includes('태그') || questionText.includes('element')) {
+        return {
+            title: 'HTML 기초 가이드',
+            content: `
+                <h5>📖 HTML 핵심 개념</h5>
+                <ul>
+                    <li><strong>시맨틱 HTML</strong>: 의미를 가진 태그 사용</li>
+                    <li><strong>구조와 내용 분리</strong>: HTML은 구조만 담당</li>
+                    <li><strong>접근성</strong>: 모든 사용자가 이용할 수 있도록</li>
+                </ul>
+                <div class="code-example">
+                    <h5>💡 기본 HTML 구조</h5>
+                    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;페이지 제목&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;제목&lt;/h1&gt;
+    &lt;p&gt;내용&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            `
+        };
+    }
+    
+    // CSS 관련 문제
+    if (questionText.includes('css') || questionText.includes('스타일') || questionText.includes('선택자')) {
+        return {
+            title: 'CSS 기초 가이드',
+            content: `
+                <h5>🎨 CSS 핵심 개념</h5>
+                <ul>
+                    <li><strong>선택자</strong>: HTML 요소를 선택하는 방법</li>
+                    <li><strong>박스 모델</strong>: margin, border, padding, content</li>
+                    <li><strong>레이아웃</strong>: Flexbox, Grid 활용</li>
+                </ul>
+                <div class="code-example">
+                    <h5>💡 기본 CSS 문법</h5>
+                    <pre><code>선택자 {
+    속성: 값;
+    속성: 값;
+}
+
+/* 예시 */
+.container {
+    display: flex;
+    justify-content: center;
+}</code></pre>
+                </div>
+            `
+        };
+    }
+    
+    // JavaScript 관련 문제
+    if (questionText.includes('javascript') || questionText.includes('js') || questionText.includes('변수') || questionText.includes('함수')) {
+        return {
+            title: 'JavaScript 기초 가이드',
+            content: `
+                <h5>⚡ JavaScript 핵심 개념</h5>
+                <ul>
+                    <li><strong>변수 선언</strong>: const, let, var</li>
+                    <li><strong>함수</strong>: 재사용 가능한 코드 블록</li>
+                    <li><strong>DOM 조작</strong>: 웹 페이지 동적 변경</li>
+                </ul>
+                <div class="code-example">
+                    <h5>💡 기본 JavaScript 문법</h5>
+                    <pre><code>// 변수 선언
+const name = 'JavaScript';
+
+// 함수 선언
+function greet() {
+    console.log('Hello!');
+}
+
+// DOM 조작
+document.getElementById('myElement');</code></pre>
+                </div>
+            `
+        };
+    }
+    
+    // 기본 가이드
+    return {
+        title: '웹 개발 기초 가이드',
+        content: `
+            <h5>🌐 웹 개발 핵심 요소</h5>
+            <ul>
+                <li><strong>HTML</strong>: 웹 페이지의 구조와 내용</li>
+                <li><strong>CSS</strong>: 스타일과 레이아웃</li>
+                <li><strong>JavaScript</strong>: 동적 기능과 상호작용</li>
+            </ul>
+            <p><strong>💡 팁:</strong> 문제를 차근차근 읽고 핵심 키워드를 찾아보세요.</p>
+            <p>결과 페이지에서 상세한 해설을 확인할 수 있습니다!</p>
+        `
+    };
 }
 
 function toggleGuide() {
@@ -351,7 +461,35 @@ function toggleGuide() {
     }
 }
 
-// 함수 오버라이딩 제거 - displayQuestion 함수에 직접 통합됨
+// 실시간 점수 업데이트 함수
+function updateScoreTracker() {
+    const answeredCount = Object.keys(examAnswers).filter(key => 
+        examAnswers[key] !== undefined && examAnswers[key] !== ''
+    ).length;
+    
+    const currentScore = answeredCount * 2;
+    const progressPercentage = (currentScore / 100) * 100;
+    
+    // 점수 표시 업데이트
+    document.getElementById('currentScore').textContent = currentScore;
+    document.getElementById('answeredCount').textContent = answeredCount;
+    
+    // 프로그레스 바 업데이트
+    const scoreBar = document.getElementById('scoreBar');
+    scoreBar.style.width = `${progressPercentage}%`;
+    
+    // 점수에 따른 색상 변경
+    const scoreDisplay = document.querySelector('.current-score');
+    if (currentScore >= 90) {
+        scoreDisplay.style.color = '#10b981'; // 초록색
+    } else if (currentScore >= 70) {
+        scoreDisplay.style.color = '#0ea5e9'; // 파란색
+    } else if (currentScore >= 50) {
+        scoreDisplay.style.color = '#f59e0b'; // 주황색
+    } else {
+        scoreDisplay.style.color = '#ef4444'; // 빨간색
+    }
+}
 
 // 애니메이션 스타일 추가
 const style = document.createElement('style');
