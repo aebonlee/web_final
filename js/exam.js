@@ -38,6 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
         submitExam(true);
     });
     
+    // 학습 가이드 토글 이벤트
+    document.getElementById('toggleGuide').addEventListener('click', toggleGuide);
+    
     // 자동 저장 (10초마다)
     setInterval(saveAnswers, 10000);
     
@@ -304,6 +307,52 @@ function submitExam(isTimeout = false) {
     
     // 결과 페이지로 이동
     window.location.href = 'result.html';
+}
+
+// 학습 가이드 관련 함수들
+function updateReferenceGuide() {
+    const question = questions[currentQuestion];
+    const referenceContent = document.getElementById('referenceContent');
+    
+    if (question && question.guide) {
+        const guideContent = `
+            <div class="guide-content">
+                <h4>${question.guide.title}</h4>
+                ${question.guide.content}
+            </div>
+        `;
+        referenceContent.innerHTML = guideContent;
+    } else {
+        // 기본 가이드 내용
+        referenceContent.innerHTML = `
+            <div class="guide-intro">
+                <p>이 문제에 대한 상세한 학습 가이드가 준비되어 있지 않습니다.</p>
+                <p>문제의 해설을 참고하여 학습하세요.</p>
+            </div>
+        `;
+    }
+}
+
+function toggleGuide() {
+    const guide = document.querySelector('.reference-guide');
+    const toggleBtn = document.getElementById('toggleGuide');
+    
+    if (guide.classList.contains('collapsed')) {
+        guide.classList.remove('collapsed');
+        toggleBtn.textContent = '📖 가이드 닫기';
+        toggleBtn.classList.remove('collapsed');
+    } else {
+        guide.classList.add('collapsed');
+        toggleBtn.textContent = '📖 가이드 열기';
+        toggleBtn.classList.add('collapsed');
+    }
+}
+
+// displayQuestion 함수에 가이드 업데이트 추가
+const originalDisplayQuestion = displayQuestion;
+function displayQuestion(index) {
+    originalDisplayQuestion(index);
+    updateReferenceGuide();
 }
 
 // 애니메이션 스타일 추가

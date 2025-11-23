@@ -7,7 +7,44 @@ const questions = [
         question: 'HTML5에서 시맨틱 요소가 아닌 것은?',
         options: ['<article>', '<section>', '<div>', '<nav>'],
         answer: 2,
-        explanation: '<div>는 의미를 갖지 않는 일반적인 컨테이너 요소입니다. 나머지는 모두 HTML5의 시맨틱 요소입니다.'
+        explanation: '<div>는 의미를 갖지 않는 일반적인 컨테이너 요소입니다. 나머지는 모두 HTML5의 시맨틱 요소입니다.',
+        guide: {
+            title: 'HTML5 시맨틱 요소',
+            content: `
+                <h4>📖 HTML5 시맨틱 요소란?</h4>
+                <p>HTML5 시맨틱 요소는 웹 페이지의 <strong>구조와 의미</strong>를 명확하게 나타내는 태그입니다.</p>
+                
+                <h5>🔹 주요 시맨틱 요소들</h5>
+                <ul>
+                    <li><code>&lt;header&gt;</code> : 페이지나 섹션의 머리말</li>
+                    <li><code>&lt;nav&gt;</code> : 내비게이션 링크들</li>
+                    <li><code>&lt;main&gt;</code> : 페이지의 주요 콘텐츠</li>
+                    <li><code>&lt;article&gt;</code> : 독립적인 글 또는 콘텐츠</li>
+                    <li><code>&lt;section&gt;</code> : 관련된 콘텐츠 그룹</li>
+                    <li><code>&lt;aside&gt;</code> : 부가적인 콘텐츠</li>
+                    <li><code>&lt;footer&gt;</code> : 페이지나 섹션의 바닥글</li>
+                </ul>
+                
+                <h5>✨ 시맨틱 요소의 장점</h5>
+                <ol>
+                    <li><strong>SEO 개선</strong> : 검색엔진이 내용을 더 잘 이해</li>
+                    <li><strong>접근성 향상</strong> : 스크린 리더 등에서 활용</li>
+                    <li><strong>유지보수성</strong> : 코드의 구조가 명확해짐</li>
+                </ol>
+                
+                <div class="code-example">
+                    <h5>💡 예시 코드</h5>
+                    <pre><code>&lt;article&gt;
+    &lt;header&gt;
+        &lt;h1&gt;블로그 제목&lt;/h1&gt;
+    &lt;/header&gt;
+    &lt;section&gt;
+        &lt;p&gt;본문 내용&lt;/p&gt;
+    &lt;/section&gt;
+&lt;/article&gt;</code></pre>
+                </div>
+            `
+        }
     },
     {
         id: 2,
@@ -15,7 +52,38 @@ const questions = [
         question: 'CSS에서 요소를 수평 중앙 정렬하는 방법이 아닌 것은?',
         options: ['margin: 0 auto;', 'text-align: center;', 'display: flex; justify-content: center;', 'vertical-align: middle;'],
         answer: 3,
-        explanation: 'vertical-align은 인라인 요소의 수직 정렬을 담당하며, 수평 중앙 정렬과는 관계가 없습니다.'
+        explanation: 'vertical-align은 인라인 요소의 수직 정렬을 담당하며, 수평 중앙 정렬과는 관계가 없습니다.',
+        guide: {
+            title: 'CSS 중앙 정렬 방법',
+            content: `
+                <h4>🎯 CSS 중앙 정렬 마스터하기</h4>
+                <p>웹 개발에서 가장 자주 사용하는 <strong>중앙 정렬 기법</strong>들을 알아봅시다.</p>
+                
+                <h5>🔹 수평 중앙 정렬</h5>
+                <ul>
+                    <li><code>margin: 0 auto;</code> - 블록 요소에 사용</li>
+                    <li><code>text-align: center;</code> - 인라인/인라인 블록 요소</li>
+                    <li><code>display: flex; justify-content: center;</code> - Flexbox</li>
+                </ul>
+                
+                <h5>🔹 수직 중앙 정렬</h5>
+                <ul>
+                    <li><code>display: flex; align-items: center;</code> - Flexbox</li>
+                    <li><code>position: absolute; top: 50%; transform: translateY(-50%);</code></li>
+                    <li><code>display: grid; place-items: center;</code> - Grid</li>
+                </ul>
+                
+                <div class="code-example">
+                    <h5>💡 완전한 중앙 정렬</h5>
+                    <pre><code>.center-box {
+    display: flex;
+    justify-content: center; /* 수평 */
+    align-items: center;     /* 수직 */
+    height: 100vh;
+}</code></pre>
+                </div>
+            `
+        }
     },
     {
         id: 3,
