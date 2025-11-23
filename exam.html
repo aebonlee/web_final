@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹프로그래밍 시험 - 진행중</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="exam-container">
+        <header class="exam-header">
+            <div class="exam-info-bar">
+                <div class="user-info">
+                    <span id="examUserName"></span>
+                </div>
+                <div class="timer-container">
+                    <span class="timer-label">남은 시간:</span>
+                    <span id="timer" class="timer">60:00</span>
+                </div>
+                <div class="progress-info">
+                    <span>진행률: </span>
+                    <span id="progressText">0/50</span>
+                </div>
+            </div>
+        </header>
+        
+        <main class="exam-main">
+            <div class="exam-content">
+                <div class="question-navigation">
+                    <h3>문제 목록</h3>
+                    <div class="nav-section">
+                        <h4>객관식 (1-40)</h4>
+                        <div id="multipleChoiceNav" class="nav-buttons"></div>
+                    </div>
+                    <div class="nav-section">
+                        <h4>단답식 (41-50)</h4>
+                        <div id="shortAnswerNav" class="nav-buttons"></div>
+                    </div>
+                </div>
+                
+                <div class="question-area">
+                    <div id="questionContainer">
+                        <!-- 문제가 동적으로 로드됩니다 -->
+                    </div>
+                    
+                    <div class="question-controls">
+                        <button id="prevBtn" class="btn-nav" disabled>이전 문제</button>
+                        <button id="nextBtn" class="btn-nav">다음 문제</button>
+                        <button id="submitBtn" class="btn-submit">제출하기</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auto-save-indicator" id="saveIndicator">
+                <span>자동 저장됨</span>
+            </div>
+        </main>
+        
+        <!-- 제출 확인 모달 -->
+        <div id="submitModal" class="modal">
+            <div class="modal-content">
+                <h3>시험 제출</h3>
+                <p>정말로 시험을 제출하시겠습니까?</p>
+                <p class="warning">제출 후에는 답안을 수정할 수 없습니다.</p>
+                <div class="modal-stats">
+                    <p>답변한 문제: <span id="answeredCount">0</span>/50</p>
+                    <p>미답변 문제: <span id="unansweredCount">50</span>개</p>
+                </div>
+                <div class="modal-buttons">
+                    <button id="confirmSubmit" class="btn-confirm">제출</button>
+                    <button id="cancelSubmit" class="btn-cancel">취소</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 시간 초과 모달 -->
+        <div id="timeoutModal" class="modal">
+            <div class="modal-content">
+                <h3>시험 시간 종료</h3>
+                <p>시험 시간이 종료되었습니다.</p>
+                <p>답안이 자동으로 제출됩니다.</p>
+                <button id="timeoutOk" class="btn-confirm">확인</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/questions.js"></script>
+    <script src="js/exam.js"></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+// 결과 페이지 JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // 시험 데이터 로드
+    const examData = localStorage.getItem('examData');
+    if (!examData) {
+        alert('시험 데이터가 없습니다. 메인 페이지로 이동합니다.');
+        window.location.href = 'index.html';
+        return;
+    }
+    
+    const data = JSON.parse(examData);
+    
+    // 채점 및 결과 표시
+    const results = gradeExam(data.answers);
+    displayResults(results, data);
+    
+    // 이벤트 리스너
+    setupEventListeners();
+});
+
+function gradeExam(answers) {
+    let multipleCorrect = 0;
+    let shortCorrect = 0;
+    const detailedResults = [];
+    
+    questions.forEach(question => {
+        const userAnswer = answers[question.id];
+        let isCorrect = false;
+        
+        if (question.type === 'multiple') {
+            // 객관식 채점
+            isCorrect = userAnswer === question.answer;
+            if (isCorrect) multipleCorrect++;
+        } else {
+            // 단답식 채점 (키워드 기반)
+            if (userAnswer) {
+                const normalizedAnswer = userAnswer.toLowerCase().trim();
+                isCorrect = question.keywords.some(keyword => 
+                    normalizedAnswer.includes(keyword.toLowerCase())
+                );
+                if (isCorrect) shortCorrect++;
+            }
+        }
+        
+        detailedResults.push({
+            question: question,
+            userAnswer: userAnswer,
+            isCorrect: isCorrect
+        });
+    });
+    
+    const totalScore = (multipleCorrect * 2) + (shortCorrect * 2); // 각 문제 2점
+    
+    return {
+        totalScore: totalScore,
+        multipleCorrect: multipleCorrect,
+        shortCorrect: shortCorrect,
+        detailedResults: detailedResults
+    };
+}
+
+function displayResults(results, examData) {
+    // 날짜 표시 (시스템 현지 시간 사용)
+    const examDate = new Date();
+    const dateOptions = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false
+    };
+    document.getElementById('examDate').textContent = 
+        `응시일: ${examDate.toLocaleString('ko-KR', dateOptions)}`;
+    
+    // 사용자 정보
+    document.getElementById('resultUserName').textContent = examData.userInfo.name;
+    document.getElementById('resultUserEmail').textContent = examData.userInfo.email;
+    
+    // 소요 시간
+    const minutes = Math.floor(examData.timeSpent / 60);
+    const seconds = examData.timeSpent % 60;
+    document.getElementById('examDuration').textContent = 
+        `${minutes}분 ${seconds}초`;
+    
+    // 점수 표시
+    document.getElementById('totalScore').textContent = results.totalScore;
+    
+    // 등급 판정
+    const gradeElement = document.getElementById('scoreGrade');
+    if (results.totalScore >= 90) {
+        gradeElement.textContent = 'A (우수)';
+        gradeElement.className = 'score-grade pass';
+    } else if (results.totalScore >= 80) {
+        gradeElement.textContent = 'B (양호)';
+        gradeElement.className = 'score-grade pass';
+    } else if (results.totalScore >= 70) {
+        gradeElement.textContent = 'C (합격)';
+        gradeElement.className = 'score-grade pass';
+    } else {
+        gradeElement.textContent = 'D (불합격)';
+        gradeElement.className = 'score-grade fail';
+    }
+    
+    // 정답률
+    const correctRate = Math.round((results.multipleCorrect + results.shortCorrect) / 50 * 100);
+    document.getElementById('correctRate').textContent = `${correctRate}%`;
+    
+    // 영역별 점수
+    document.getElementById('multipleScore').textContent = results.multipleCorrect;
+    document.getElementById('shortScore').textContent = results.shortCorrect;
+    
+    // 프로그레스 바
+    const multipleBar = document.getElementById('multipleBar');
+    const shortBar = document.getElementById('shortBar');
+    
+    setTimeout(() => {
+        multipleBar.style.width = `${(results.multipleCorrect / 40) * 100}%`;
+        shortBar.style.width = `${(results.shortCorrect / 10) * 100}%`;
+    }, 100);
+    
+    // 상세 결과 표시
+    displayDetailedResults(results.detailedResults);
+}
+
+function displayDetailedResults(detailedResults) {
+    const multipleContainer = document.getElementById('multipleResults');
+    const shortContainer = document.getElementById('shortResults');
+    
+    detailedResults.forEach((result, index) => {
+        const resultHTML = createResultHTML(result, index);
+        
+        if (result.question.type === 'multiple') {
+            multipleContainer.innerHTML += resultHTML;
+        } else {
+            shortContainer.innerHTML += resultHTML;
+        }
+    });
+}
+
+function createResultHTML(result, index) {
+    const q = result.question;
+    const statusClass = result.isCorrect ? 'correct' : 'incorrect';
+    const statusText = result.isCorrect ? '정답' : '오답';
+    
+    let html = `
+        <div class="question-result ${statusClass}">
+            <div class="result-question-header">
+                <span class="question-number">문제 ${index + 1}</span>
+                <span class="result-status ${statusClass}">${statusText}</span>
+            </div>
+            <div class="question-text">${q.question}</div>
+    `;
+    
+    if (q.type === 'multiple') {
+        // 사용자 답안
+        if (result.userAnswer !== undefined) {
+            html += `
+                <div class="user-answer">
+                    <strong>선택한 답:</strong> ${q.options[result.userAnswer]}
+                </div>
+            `;
+        } else {
+            html += `
+                <div class="user-answer">
+                    <strong>선택한 답:</strong> 미답변
+                </div>
+            `;
+        }
+        
+        // 정답
+        html += `
+            <div class="correct-answer">
+                <strong>정답:</strong> ${q.options[q.answer]}
+            </div>
+        `;
+    } else {
+        // 단답식
+        html += `
+            <div class="user-answer">
+                <strong>작성한 답:</strong> ${result.userAnswer || '미답변'}
+            </div>
+            <div class="correct-answer">
+                <strong>정답:</strong> ${q.answer}
+            </div>
+        `;
+    }
+    
+    // 해설
+    html += `
+        <div class="explanation">
+            <strong>해설:</strong> ${q.explanation}
+        </div>
+    </div>
+    `;
+    
+    return html;
+}
+
+function setupEventListeners() {
+    // 탭 전환
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tab = this.dataset.tab;
+            
+            // 버튼 활성화 상태 변경
+            tabBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // 콘텐츠 전환
+            if (tab === 'multiple') {
+                document.getElementById('multipleContent').style.display = 'block';
+                document.getElementById('shortContent').style.display = 'none';
+            } else {
+                document.getElementById('multipleContent').style.display = 'none';
+                document.getElementById('shortContent').style.display = 'block';
+            }
+        });
+    });
+    
+    // 다시 응시하기
+    document.getElementById('retakeBtn').addEventListener('click', function() {
+        if (confirm('정말로 다시 응시하시겠습니까? 현재 결과는 유지됩니다.')) {
+            localStorage.removeItem('examAnswers');
+            localStorage.removeItem('examSubmitted');
+            localStorage.removeItem('timeLeft');
+            window.location.href = 'index.html';
+        }
+    });
+    
+    // 인쇄
+    document.getElementById('printBtn').addEventListener('click', function() {
+        window.print();
+    });
+    
+    // PDF 다운로드 (간단한 구현)
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+        alert('PDF 다운로드 기능은 별도 라이브러리가 필요합니다.\n대신 브라우저의 인쇄 기능에서 "PDF로 저장"을 선택하세요.');
+        window.print();
+    });
+}

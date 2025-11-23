@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹프로그래밍 평가 시스템</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>웹프로그래밍 평가 시스템</h1>
+            <p class="subtitle">HTML, CSS, JavaScript 종합 평가</p>
+        </header>
+        
+        <main>
+            <div class="intro-card">
+                <h2>시험 안내</h2>
+                <div class="exam-info">
+                    <div class="info-item">
+                        <span class="label">문제 구성:</span>
+                        <span class="value">객관식 40문항 + 단답식 10문항</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">시험 시간:</span>
+                        <span class="value">60분</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">합격 기준:</span>
+                        <span class="value">70점 이상</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">평가 영역:</span>
+                        <span class="value">HTML5, CSS3, JavaScript ES6+</span>
+                    </div>
+                </div>
+                
+                <div class="notice">
+                    <h3>주의사항</h3>
+                    <ul>
+                        <li>시험 중 브라우저를 새로고침해도 답안이 자동 저장됩니다</li>
+                        <li>시간이 종료되면 자동으로 제출됩니다</li>
+                        <li>제출 후 즉시 결과와 해설을 확인할 수 있습니다</li>
+                        <li>부정행위 방지를 위해 복사/붙여넣기가 제한됩니다</li>
+                    </ul>
+                </div>
+                
+                <div class="user-form">
+                    <h3>응시자 정보</h3>
+                    <form id="userForm">
+                        <div class="form-group">
+                            <label for="userName">이름</label>
+                            <input type="text" id="userName" required placeholder="이름을 입력하세요">
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail">이메일</label>
+                            <input type="email" id="userEmail" required placeholder="이메일을 입력하세요">
+                        </div>
+                        <button type="submit" class="btn-start">시험 시작하기</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 웹프로그래밍 평가 시스템. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>
