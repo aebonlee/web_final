@@ -171,6 +171,9 @@ function displayQuestion(index) {
     
     // 현재 문제 하이라이트
     updateNavigation();
+    
+    // 학습 가이드 업데이트
+    updateReferenceGuide();
 }
 
 function updateNavigation() {
@@ -348,12 +351,7 @@ function toggleGuide() {
     }
 }
 
-// displayQuestion 함수에 가이드 업데이트 추가
-const originalDisplayQuestion = displayQuestion;
-function displayQuestion(index) {
-    originalDisplayQuestion(index);
-    updateReferenceGuide();
-}
+// 함수 오버라이딩 제거 - displayQuestion 함수에 직접 통합됨
 
 // 애니메이션 스타일 추가
 const style = document.createElement('style');
