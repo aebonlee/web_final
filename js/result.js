@@ -123,6 +123,19 @@ function displayResults(results, examData) {
     displayDetailedResults(results.detailedResults);
 }
 
+// HTML 엔티티 변환 함수
+function escapeHtml(text) {
+    if (!text) return text;
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
+}
+
 function displayDetailedResults(detailedResults) {
     const multipleContainer = document.getElementById('multipleResults');
     const shortContainer = document.getElementById('shortResults');
@@ -149,7 +162,7 @@ function createResultHTML(result, index) {
                 <span class="question-number">문제 ${index + 1}</span>
                 <span class="result-status ${statusClass}">${statusText}</span>
             </div>
-            <div class="question-text">${q.question}</div>
+            <div class="question-text">${escapeHtml(q.question)}</div>
     `;
     
     if (q.type === 'multiple') {
@@ -157,7 +170,7 @@ function createResultHTML(result, index) {
         if (result.userAnswer !== undefined) {
             html += `
                 <div class="user-answer">
-                    <strong>선택한 답:</strong> ${q.options[result.userAnswer]}
+                    <strong>선택한 답:</strong> ${escapeHtml(q.options[result.userAnswer])}
                 </div>
             `;
         } else {
@@ -171,17 +184,17 @@ function createResultHTML(result, index) {
         // 정답
         html += `
             <div class="correct-answer">
-                <strong>정답:</strong> ${q.options[q.answer]}
+                <strong>정답:</strong> ${escapeHtml(q.options[q.answer])}
             </div>
         `;
     } else {
         // 단답식
         html += `
             <div class="user-answer">
-                <strong>작성한 답:</strong> ${result.userAnswer || '미답변'}
+                <strong>작성한 답:</strong> ${escapeHtml(result.userAnswer) || '미답변'}
             </div>
             <div class="correct-answer">
-                <strong>정답:</strong> ${q.answer}
+                <strong>정답:</strong> ${escapeHtml(q.answer)}
             </div>
         `;
     }
@@ -189,7 +202,7 @@ function createResultHTML(result, index) {
     // 해설
     html += `
         <div class="explanation">
-            <strong>해설:</strong> ${q.explanation}
+            <strong>해설:</strong> ${escapeHtml(q.explanation)}
         </div>
     </div>
     `;
@@ -234,9 +247,67 @@ function setupEventListeners() {
         window.print();
     });
     
-    // PDF 다운로드 (간단한 구현)
-    document.getElementById('downloadBtn').addEventListener('click', function() {
-        alert('PDF 다운로드 기능은 별도 라이브러리가 필요합니다.\n대신 브라우저의 인쇄 기능에서 "PDF로 저장"을 선택하세요.');
-        window.print();
+    // PDF 다운로드
+    document.getElementById('downloadBtn').addEventListener('click', async function() {
+        // 버튼 비활성화 및 로딩 표시
+        const btn = this;
+        const originalText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'PDF 생성 중...';
+        
+        try {
+            // jsPDF 인스턴스 생성
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            
+            // 한글 폰트 문제를 피하기 위해 캔버스로 변환 후 PDF 생성
+            const element = document.querySelector('.result-main');
+            
+            // 결과 영역을 캔버스로 변환
+            const canvas = await html2canvas(element, {
+                scale: 2,
+                logging: false,
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            });
+            
+            // 캔버스를 이미지로 변환
+            const imgData = canvas.toDataURL('image/png');
+            
+            // PDF에 이미지 추가
+            const imgWidth = 210; // A4 width in mm
+            const pageHeight = 297; // A4 height in mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+            
+            // 첫 페이지 추가
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+            
+            // 여러 페이지가 필요한 경우 처리
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+            
+            // 파일명 생성
+            const userName = document.getElementById('resultUserName').textContent;
+            const date = new Date().toLocaleDateString('ko-KR').replace(/\./g, '-').replace(/\s/g, '');
+            const filename = `웹프로그래밍_시험결과_${userName}_${date}.pdf`;
+            
+            // PDF 다운로드
+            pdf.save(filename);
+            
+        } catch (error) {
+            console.error('PDF 생성 중 오류:', error);
+            alert('PDF 생성 중 오류가 발생했습니다.\n브라우저의 인쇄 기능에서 "PDF로 저장"을 이용해주세요.');
+        } finally {
+            // 버튼 원상 복구
+            btn.disabled = false;
+            btn.textContent = originalText;
+        }
     });
 }

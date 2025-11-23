@@ -86,6 +86,18 @@ function createNavigation() {
     }
 }
 
+// HTML 엔티티 변환 함수
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
+}
+
 function displayQuestion(index) {
     const question = questions[index];
     const container = document.getElementById('questionContainer');
@@ -95,7 +107,7 @@ function displayQuestion(index) {
             <span class="question-number">문제 ${index + 1}</span>
             <span class="question-type">${question.type === 'multiple' ? '객관식' : '단답식'}</span>
         </div>
-        <div class="question-text">${question.question}</div>
+        <div class="question-text">${escapeHtml(question.question)}</div>
     `;
     
     if (question.type === 'multiple') {
@@ -109,7 +121,7 @@ function displayQuestion(index) {
                            id="opt${i}" 
                            value="${i}"
                            ${isChecked ? 'checked' : ''}>
-                    <label for="opt${i}">${option}</label>
+                    <label for="opt${i}">${escapeHtml(option)}</label>
                 </div>
             `;
         });
@@ -119,7 +131,7 @@ function displayQuestion(index) {
         html += `
             <textarea class="short-answer-input" 
                       id="shortAnswer" 
-                      placeholder="답을 입력하세요...">${savedAnswer}</textarea>
+                      placeholder="답을 입력하세요...">${escapeHtml(savedAnswer)}</textarea>
         `;
     }
     
