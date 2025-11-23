@@ -2,7 +2,7 @@
 
 ## 프로젝트 개요
 - **프로젝트명**: 웹프로그래밍 평가 시스템
-- **개발 기간**: 2024년 11월 23일
+- **개발 기간**: 2025년 11월 23일
 - **개발자**: @aebonlee
 - **참고 프로젝트**: [database_test](https://github.com/aebonlee/database_test)
 
@@ -14,7 +14,7 @@
 
 ## 개발 일정
 
-### 2024년 11월 23일
+### 2025년 11월 23일
 
 #### 14:25 - 프로젝트 초기 설정
 - 프로젝트 디렉토리 구조 생성
@@ -189,7 +189,7 @@ document.addEventListener('copy', (e) => {
 - [JavaScript Timer](https://developer.mozilla.org/ko/docs/Web/API/WindowOrWorkerGlobalScope/setInterval)
 
 ## 프로젝트 완료
-- **완료 시간**: 2024년 11월 23일 14:34
+- **완료 시간**: 2025년 11월 23일 14:34
 - **총 개발 시간**: 약 10분
 - **파일 수**: 8개
 - **코드 라인**: 약 2000줄

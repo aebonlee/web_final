@@ -17,13 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // 학번 유효성 검사 (숫자만)
-        if (!/^\d+$/.test(userStudentId)) {
-            alert('학번은 숫자만 입력해주세요.');
-            document.getElementById('userStudentId').focus();
-            return;
-        }
-        
         // 사용자 정보 저장
         const userInfo = {
             name: userName,

@@ -129,7 +129,7 @@ web_programming_exam/
 - GitHub: [@aebonlee](https://github.com/aebonlee)
 
 ## 📅 업데이트 기록
-- 2024.11.23: 초기 버전 릴리즈
+- 2025.11.23: 초기 버전 릴리즈
 - 50문항 웹프로그래밍 평가 시스템 구현
 - 로컬스토리지 기반 자동 저장 기능
 - 상세 해설 및 채점 시스템
