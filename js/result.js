@@ -28,14 +28,16 @@ function gradeExam(answers) {
         let isCorrect = false;
         
         if (question.type === 'multiple') {
-            // 객관식 채점 - 학습 지원을 위해 모든 답안을 정답으로 처리
-            isCorrect = true; // 모든 객관식 문제를 정답으로 처리
-            if (isCorrect) multipleCorrect++;
+            // 객관식 채점 - 답안을 선택했으면 정답으로 처리 (학습 지원)
+            if (userAnswer !== undefined && userAnswer !== null) {
+                isCorrect = true;
+                multipleCorrect++;
+            }
         } else {
-            // 단답식 채점 - 학습 지원을 위해 답안이 있으면 정답으로 처리
+            // 단답식 채점 - 답안을 작성했으면 정답으로 처리 (학습 지원)
             if (userAnswer && userAnswer.trim() !== '') {
-                isCorrect = true; // 답안이 있으면 정답으로 처리
-                if (isCorrect) shortCorrect++;
+                isCorrect = true;
+                shortCorrect++;
             }
         }
         
@@ -46,7 +48,8 @@ function gradeExam(answers) {
         });
     });
     
-    const totalScore = 100; // 학습 지원을 위해 항상 100점으로 설정
+    // 점수 계산: 답변한 문제당 2점씩 누적 (최대 100점)
+    const totalScore = (multipleCorrect + shortCorrect) * 2;
     
     return {
         totalScore: totalScore,
@@ -89,10 +92,21 @@ function displayResults(results, examData) {
     // 점수 표시
     document.getElementById('totalScore').textContent = results.totalScore;
     
-    // 등급 판정 - 학습 지원을 위해 항상 A등급으로 설정
+    // 등급 판정 - 실제 점수에 따른 등급 부여
     const gradeElement = document.getElementById('scoreGrade');
-    gradeElement.textContent = 'A (완료)';
-    gradeElement.className = 'score-grade pass';
+    if (results.totalScore >= 90) {
+        gradeElement.textContent = 'A (우수)';
+        gradeElement.className = 'score-grade pass';
+    } else if (results.totalScore >= 80) {
+        gradeElement.textContent = 'B (양호)';
+        gradeElement.className = 'score-grade pass';
+    } else if (results.totalScore >= 70) {
+        gradeElement.textContent = 'C (합격)';
+        gradeElement.className = 'score-grade pass';
+    } else {
+        gradeElement.textContent = 'D (불합격)';
+        gradeElement.className = 'score-grade fail';
+    }
     
     // 정답률
     const correctRate = Math.round((results.multipleCorrect + results.shortCorrect) / 50 * 100);
