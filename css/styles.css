@@ -787,7 +787,7 @@ header h1 {
     margin-top: 2rem;
 }
 
-.btn-retake, .btn-print, .btn-download {
+.btn-retake {
     padding: 1rem 2rem;
     border: none;
     border-radius: 8px;
@@ -795,9 +795,6 @@ header h1 {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
-}
-
-.btn-retake {
     background: var(--primary-color);
     color: white;
 }
@@ -805,27 +802,7 @@ header h1 {
 .btn-retake:hover {
     background: #1d4ed8;
     transform: translateY(-2px);
-}
-
-.btn-print {
-    background: white;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-}
-
-.btn-print:hover {
-    background: var(--primary-color);
-    color: white;
-}
-
-.btn-download {
-    background: var(--secondary-color);
-    color: white;
-}
-
-.btn-download:hover {
-    background: #059669;
-    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 footer {
@@ -854,7 +831,7 @@ footer {
         flex-direction: column;
     }
     
-    .btn-retake, .btn-print, .btn-download {
+    .btn-retake {
         width: 100%;
     }
 }
