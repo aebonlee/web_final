@@ -75,7 +75,13 @@ function displayResults(results, examData) {
     
     // 사용자 정보
     document.getElementById('resultUserName').textContent = examData.userInfo.name;
-    document.getElementById('resultUserEmail').textContent = examData.userInfo.email;
+    // 학번 표시 (이전 버전 호환성 체크)
+    if (examData.userInfo.studentId) {
+        document.getElementById('resultUserStudentId').textContent = examData.userInfo.studentId;
+    } else if (examData.userInfo.email) {
+        // 이전 버전에서는 이메일이 있을 수 있음
+        document.getElementById('resultUserStudentId').textContent = examData.userInfo.email;
+    }
     
     // 소요 시간
     const minutes = Math.floor(examData.timeSpent / 60);

@@ -10,17 +10,24 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         const userName = document.getElementById('userName').value.trim();
-        const userEmail = document.getElementById('userEmail').value.trim();
+        const userStudentId = document.getElementById('userStudentId').value.trim();
         
-        if (!userName || !userEmail) {
-            alert('이름과 이메일을 모두 입력해주세요.');
+        if (!userName || !userStudentId) {
+            alert('이름과 학번을 모두 입력해주세요.');
+            return;
+        }
+        
+        // 학번 유효성 검사 (숫자만)
+        if (!/^\d+$/.test(userStudentId)) {
+            alert('학번은 숫자만 입력해주세요.');
+            document.getElementById('userStudentId').focus();
             return;
         }
         
         // 사용자 정보 저장
         const userInfo = {
             name: userName,
-            email: userEmail,
+            studentId: userStudentId,
             startTime: new Date().toISOString()
         };
         
@@ -45,7 +52,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedUserInfo) {
             const userInfo = JSON.parse(savedUserInfo);
             document.getElementById('userName').value = userInfo.name || '';
-            document.getElementById('userEmail').value = userInfo.email || '';
+            // 이전 버전 호환성을 위해 email 필드도 체크
+            if (userInfo.studentId) {
+                document.getElementById('userStudentId').value = userInfo.studentId;
+            } else if (userInfo.email) {
+                // 이전 데이터가 있으면 학번 필드는 비워둠
+                document.getElementById('userStudentId').value = '';
+            }
         }
     }
     
@@ -53,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('userName').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             e.preventDefault();
-            document.getElementById('userEmail').focus();
+            document.getElementById('userStudentId').focus();
         }
     });
 });
