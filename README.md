@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-v2.0-blue.svg)
+![Version](https://img.shields.io/badge/version-v3.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow.svg)
 ![CSS3](https://img.shields.io/badge/CSS3-Grid%20%26%20Flexbox-blue.svg)
@@ -18,40 +18,68 @@
 
 ---
 
+## 🔄 v3.0 주요 업데이트 내용
+
+### 🔧 **핵심 버그 수정**
+- ✅ **채점 시스템 완전 개선**: 실제 정답 검증 로직 구현
+- ✅ **단답형 문제 지능형 검증**: 부분 매칭 및 키워드 기반 채점
+- ✅ **S 등급 추가**: 100점 달성 시 특별 등급 부여
+
+### 🔒 **보안 강화**
+- 🛡️ **데이터 암호화**: localStorage 데이터 암호화 및 무결성 검증
+- ⏱️ **타이머 보호**: 실시간 타이머 조작 감지 및 방지
+- 🚫 **부정행위 방지**: 개발자 도구 감지, 복사/붙여넣기 차단
+- 🔐 **체크섬 검증**: 데이터 무결성 실시간 모니터링
+
+### 📊 **개선된 평가 시스템**
+- 정확한 점수 계산 (정답만 인정)
+- 복수 정답 지원 (단답형 문제)
+- 대소문자 구분 없는 유연한 채점
+- 키워드 기반 부분 점수 시스템
+
+---
+
 ## 🌟 프로젝트 소개
 
-웹프로그래밍 학습 지원 시스템은 **기존의 평가 중심 시험 도구를 혁신적인 학습 지원 플랫폼으로 전환**한 교육 기술 프로젝트입니다. 
+웹프로그래밍 학습 지원 시스템은 **정확한 평가와 효과적인 학습을 동시에 제공하는** 교육 기술 플랫폼입니다.
 
-### 🎯 **"평가에서 학습으로"**
-- 모든 학생이 **100점 완주**할 수 있는 학습 지원 시스템
-- **50개 문제별 맞춤형 실시간 학습 가이드** 제공  
-- **즉시 피드백**과 **시각적 진행률 추적**으로 학습 동기 극대화
-- HTML5, CSS3, JavaScript 핵심 개념의 **체계적 학습** 지원
+### 🎯 **평가와 학습의 균형**
+- **정확한 평가**: 실제 정답 기반의 공정한 채점
+- **50개 문제**: HTML5(15), CSS3(15), JavaScript(20)
+- **즉시 피드백**: 문제별 상세 해설과 학습 가이드
+- **진도 추적**: 실시간 점수 및 진행률 표시
 
-## ✨ 🆕 혁신적 주요 기능
+## ✨ 주요 기능
 
-### 🎨 **Ocean Blue 디자인 시스템**
-- Modern Sans 타이포그래피 (Pretendard + Inter)
-- GPU 가속 애니메이션 및 스케일 트랜스폼
-- 완전 반응형 3열 레이아웃 (네비게이션 + 문제 + 학습 가이드)
-- 다크/라이트 모드 대응 준비
+### 📝 **평가 시스템**
+- **객관식 40문제**: 4지선다형, 정확한 답안 선택 필요
+- **단답형 10문제**: 키워드 매칭, 대소문자 구분 없음
+- **채점 기준**:
+  - S 등급: 100점 (완벽)
+  - A 등급: 90-98점 (우수)
+  - B 등급: 80-88점 (양호)
+  - C 등급: 70-78점 (합격)
+  - D 등급: 70점 미만 (재학습 필요)
 
-### 🧠 **지능형 학습 지원**
-- **실시간 학습 가이드**: 문제별 키워드 분석 기반 맞춤형 콘텐츠
-- **누적 점수 트래커**: 문제당 2점, 시각적 진행률 바
-- **즉시 피드백 시스템**: 답안 입력과 동시에 점수 및 가이드 업데이트
-- **자동 가이드 생성**: HTML, CSS, JavaScript 영역별 지능형 콘텐츠
+### 🧠 **학습 지원**
+- **실시간 학습 가이드**: 각 문제별 관련 개념 설명
+- **오답 피드백**: 틀린 문제에 대한 상세 해설
+- **코드 예시**: 실제 활용 가능한 예제 코드 제공
+- **참고 자료**: 추가 학습을 위한 리소스 링크
 
-### 📱 **완전 반응형 & 접근성**
-- **데스크톱**: 3열 전체 레이아웃 최적화
-- **태블릿**: 2열 레이아웃 + 가이드 축소
-- **모바일**: 1열 레이아웃 + 터치 최적화
-- **WCAG 2.1 AA** 접근성 준수
+### 🔒 **보안 기능**
+```javascript
+// 보안 기능 예시
+- 데이터 암호화: Base64 + 난독화
+- 타이머 무결성: 실시간 검증
+- 개발자 도구 감지: 주기적 모니터링
+- 체크섬 검증: SHA-like 해싱
+```
 
 ### 💾 **데이터 관리**
-- **자동 저장**: 10초 간격 + 즉시 저장 (이중 보장)
-- **세션 복구**: 브라우저 새로고침 시 자동 진도 복원
-- **LocalStorage 기반**: 서버 없는 완전 클라이언트 사이드
+- **자동 저장**: 10초마다 자동 저장
+- **세션 복구**: 브라우저 새로고침 시 진도 유지
+- **암호화 저장**: 보안 강화된 localStorage 활용
 
 ---
 
@@ -76,348 +104,94 @@ open index.html  # macOS
 start index.html # Windows
 ```
 
-### 3️⃣ **로컬 서버 실행** (개발용)
-```bash
-# Python 사용
-python -m http.server 8000
-
-# Node.js 사용
-npx serve .
-
-# 브라우저에서 접속
-http://localhost:8000
-```
-
 ---
 
 ## 📁 프로젝트 구조
 
 ```
-web_programming_exam/
-├── 📄 index.html              # 🏠 메인 페이지 (사용자 입력)
-├── 📄 exam.html               # 📝 학습 진행 페이지 (핵심 기능)
-├── 📄 result.html             # 📊 결과 및 해설 페이지
-├── 📄 README.md               # 📖 프로젝트 소개 (현재 파일)
-│
-├── 🎨 css/
-│   └── styles.css             # 🎨 Ocean Blue 디자인 시스템
-│
-├── ⚡ js/
-│   ├── main.js                # 👤 사용자 정보 관리
-│   ├── exam.js                # 🎯 학습 진행 로직 (메인)
-│   ├── questions.js           # 📚 50문제 데이터베이스
-│   └── result.js              # 📈 결과 처리 및 분석
-│
-└── 📚 Dev_md/                 # 🔗 완전한 개발 문서화
-    ├── api_reference.md        # 📖 API 및 함수 참조 (708줄)
-    ├── technical_specifications.md  # 🏗️ 기술 명세서 (625줄)
-    ├── final_development_log.md     # 📋 개발 일지 (288줄)
-    ├── user_guide.md           # 👥 사용자 가이드 (208줄)
-    ├── deployment_guide.md     # 🚀 배포 가이드 (648줄)
-    └── project_completion_summary.md # 🎯 프로젝트 완료 보고서 (412줄)
-```
-
-> 📊 **총 문서량**: 2,889줄의 완전한 기술 문서
-
----
-
-## 💻 기술 스택 & 아키텍처
-
-### 🎨 **Frontend Technology Stack**
-```
-┌─────────────────────────────────────────┐
-│  🌐 Presentation Layer                  │
-├─────────────────────────────────────────┤
-│  📄 HTML5        Semantic, Accessible   │
-│  🎨 CSS3         Grid + Flexbox + Vars  │
-│  ⚡ JavaScript   ES6+ Vanilla (No FW)   │
-├─────────────────────────────────────────┤
-│  🎯 Business Logic                      │
-├─────────────────────────────────────────┤
-│  🧠 Exam Manager    학습 진행 관리        │
-│  📊 Score Tracker   실시간 점수 추적      │  
-│  📚 Guide Generator 자동 가이드 생성      │
-│  💾 Data Manager    상태 및 저장 관리     │
-└─────────────────────────────────────────┘
-```
-
-### 🏗️ **Design System**
-```css
-/* Ocean Blue 컬러 시스템 */
-:root {
-  --primary: #0ea5e9;    /* 메인 블루 */
-  --secondary: #0284c7;  /* 딥 블루 */ 
-  --accent: #38bdf8;     /* 라이트 블루 */
-  --success: #10b981;    /* 성공 그린 */
-}
-
-/* Modern Sans Typography */
-font-family: 'Pretendard', 'Inter', system-ui;
-```
-
-### ⚡ **성능 최적화**
-- **GPU 가속 애니메이션**: `transform3d()`, `will-change`
-- **효율적 DOM 조작**: 이벤트 위임 + 캐싱
-- **최소 리페인트**: CSS 변수 + 클래스 토글
-- **번들 없음**: 순수 바닐라 JavaScript (0 의존성)
-
----
-
-## 🎓 학습 영역 & 커리큘럼
-
-<div align="center">
-
-| 🌐 **HTML5** | 🎨 **CSS3** | ⚡ **JavaScript** |
-|:---:|:---:|:---:|
-| **15문항** | **15문항** | **20문항** |
-| 시맨틱 태그 | Flexbox & Grid | ES6+ 문법 |
-| Form & Input | 선택자 마스터리 | DOM 조작 |
-| 멀티미디어 | 애니메이션 | 이벤트 처리 |
-| 접근성 | 반응형 디자인 | 비동기 프로그래밍 |
-
-</div>
-
-### 📚 **상세 학습 가이드 제공**
-각 문제마다 다음과 같은 맞춤형 학습 자료를 제공:
-- 🔍 **핵심 개념 설명**
-- 💡 **실용적인 코드 예제** 
-- 🎯 **실무 적용 팁**
-- 🔗 **관련 리소스 링크**
-
----
-
-## 📊 혁신적 점수 시스템
-
-### 🎯 **학습 완주형 점수 체계**
-```
-📈 실시간 누적 점수 = 답변한 문제 수 × 2점
-
-✅ 객관식 (1-40번): 선택만 하면 정답 처리 
-✅ 단답식 (41-50번): 작성만 하면 정답 처리
-🎊 최종 목표: 모든 학생이 100점 달성!
-```
-
-| 진행도 | 점수 | 상태 | 시각적 피드백 |
-|:---:|:---:|:---:|:---:|
-| 0-25문항 | 0-50점 | 🔴 시작 | 빨간색 프로그레스 바 |
-| 26-35문항 | 52-70점 | 🟠 진행 | 주황색 프로그레스 바 |  
-| 36-45문항 | 72-90점 | 🔵 양호 | 파란색 프로그레스 바 |
-| 46-50문항 | 92-100점 | 🟢 완료 | 초록색 프로그레스 바 |
-
-### 🏆 **성취 기반 등급 시스템**
-- 🥇 **S등급**: 100점 (전체 완료)
-- 🥈 **A등급**: 90-98점 (거의 완료)  
-- 🥉 **B등급**: 80-88점 (양호한 진행)
-- 📈 **C등급**: 70-78점 (기본 달성)
-
----
-
-## 🚀 배포 & 호스팅
-
-### 🌐 **라이브 데모 사이트**
-```
-✨ 메인 사이트: https://aebonlee.github.io/web_final/
-📱 모바일 최적화: ✅ 지원  
-🔒 HTTPS 보안: ✅ 적용
-⚡ CDN 가속: ✅ GitHub Pages
-```
-
-### 🏗️ **다양한 배포 옵션**
-| 플랫폼 | 난이도 | 소요시간 | 추천도 |
-|:---:|:---:|:---:|:---:|
-| **GitHub Pages** | ⭐⭐ | 5분 | 🥇 추천 |
-| **Netlify** | ⭐ | 3분 | 🥈 |  
-| **Vercel** | ⭐ | 2분 | 🥉 |
-| **Firebase** | ⭐⭐⭐ | 10분 | 🔧 고급 |
-
-> 📖 상세한 배포 가이드: [`Dev_md/deployment_guide.md`](./Dev_md/deployment_guide.md)
-
----
-
-## 🎯 사용법 & 학습 가이드
-
-### 👥 **학습자를 위한 가이드**
-1. **시작**: 이름과 학번 입력 
-2. **학습**: 실시간 가이드를 참고하며 문제 해결
-3. **추적**: 누적 점수와 진행률 실시간 확인  
-4. **완료**: 상세 해설로 복습 및 심화 학습
-
-### 🧑‍🏫 **교육자를 위한 가이드**  
-- **수업 전**: 학습 목표와 연계하여 활용
-- **수업 중**: 실시간 학습 지원 도구로 활용
-- **수업 후**: 복습 및 자기주도학습 자료로 활용
-
-> 📖 상세한 사용법: [`Dev_md/user_guide.md`](./Dev_md/user_guide.md)
-
----
-
-## 🔬 기술 문서 & 확장성
-
-### 📚 **완전한 기술 문서 제공**
-| 문서 | 내용 | 대상 |
-|:---:|:---:|:---:|
-| 🏗️ [기술 명세서](./Dev_md/technical_specifications.md) | 아키텍처 & 설계 | 개발자 |
-| 📖 [API 참조](./Dev_md/api_reference.md) | 함수 & 사용법 | 개발자 |
-| 👥 [사용자 가이드](./Dev_md/user_guide.md) | 사용법 & 팁 | 학습자 |
-| 🚀 [배포 가이드](./Dev_md/deployment_guide.md) | 호스팅 & CI/CD | DevOps |
-| 📋 [개발 일지](./Dev_md/final_development_log.md) | 개발 과정 | 전체 |
-
-### 🔧 **확장 & 커스터마이징**
-```javascript
-// 새로운 문제 유형 추가 예시
-const newQuestionType = {
-  id: 51,
-  type: 'code_editor',  // 새로운 유형
-  question: '다음 코드를 완성하세요',
-  template: 'function example() {\n  // 여기에 코드 작성\n}',
-  guide: customCodeGuide
-};
-```
-
-### 🌐 **다국어 지원 준비**
-```javascript
-// i18n 확장 구조 
-const translations = {
-  ko: { title: '웹프로그래밍 학습 지원 시스템' },
-  en: { title: 'Web Programming Learning Support System' },
-  ja: { title: 'ウェブプログラミング学習支援システム' }
-};
+web_final/
+├── 📄 index.html              # 메인 페이지 (사용자 정보 입력)
+├── 📄 exam.html               # 시험 진행 페이지
+├── 📄 result.html             # 결과 및 해설 페이지
+├── 📂 js/
+│   ├── 📄 main.js            # 메인 페이지 로직
+│   ├── 📄 exam.js            # 시험 진행 로직
+│   ├── 📄 result.js          # 결과 처리 및 채점 (개선됨)
+│   ├── 📄 questions.js       # 문제 데이터베이스
+│   └── 📄 security.js        # 보안 유틸리티 (신규)
+├── 📂 css/
+│   └── 📄 styles.css         # 통합 스타일시트
+└── 📂 Dev_md/                # 개발 문서
 ```
 
 ---
 
-## 📈 성과 지표 & 영향
+## 📊 문제 구성
 
-### 🎯 **프로젝트 성과**
-- ✅ **학습 완료율**: 100% 보장 시스템
-- ✅ **사용자 만족도**: 직관적 UI/UX  
-- ✅ **기술적 혁신**: 순수 JavaScript SPA
-- ✅ **교육적 가치**: 평가 → 학습 패러다임 전환
+### HTML5 (15문제)
+- 시맨틱 요소와 구조
+- 폼과 입력 요소
+- 멀티미디어 태그
+- 메타데이터와 SEO
 
-### 🌟 **혁신 포인트**
-1. **교육 기술**: 기존 평가 도구의 학습 지원 전환
-2. **사용자 경험**: 실시간 피드백 + 개인화 가이드  
-3. **기술 구현**: 프레임워크 없는 복잡한 SPA 구현
-4. **문서화**: 2,889줄의 완전한 기술 문서
+### CSS3 (15문제)
+- Flexbox와 Grid 레이아웃
+- 선택자와 우선순위
+- 애니메이션과 트랜지션
+- 반응형 디자인
 
----
-
-## 🤝 기여하기 & 커뮤니티
-
-### 💡 **기여 방법**
-1. **🐛 버그 신고**: [Issues](https://github.com/aebonlee/web_final/issues)에서 버그 리포트
-2. **✨ 기능 제안**: 새로운 아이디어나 개선사항 제안
-3. **📖 문서 개선**: 오타 수정, 번역, 예제 추가  
-4. **🔧 코드 기여**: Fork → PR을 통한 코드 기여
-
-### 🌟 **기여자 가이드라인**
-- 코드 스타일: Prettier + ESLint 설정 따라주세요
-- 커밋 메시지: 이모지 + 명확한 설명 (`🐛 Fix navigation bug`)
-- 테스트: 변경사항은 반드시 테스트 후 PR 요청
-- 문서: 새로운 기능 추가 시 문서 업데이트 필수
+### JavaScript (20문제)
+- ES6+ 문법과 기능
+- DOM 조작과 이벤트
+- 비동기 프로그래밍
+- 배열과 객체 메서드
 
 ---
 
-## 📞 지원 & 문의
+## 🛡️ 보안 및 무결성
 
-### 🆘 **기술 지원**
-- 🐛 **버그 리포트**: [GitHub Issues](https://github.com/aebonlee/web_final/issues)
-- 💬 **기능 제안**: [Discussions](https://github.com/aebonlee/web_final/discussions)  
-- 📧 **직접 문의**: Issues 탭 이용 권장
-
-### 🔗 **관련 링크**
-- 🌐 **라이브 데모**: https://aebonlee.github.io/web_final/
-- 📚 **기술 문서**: [Dev_md 폴더](./Dev_md/)
-- 🔄 **업데이트**: [Releases](https://github.com/aebonlee/web_final/releases)
+### 구현된 보안 기능
+1. **데이터 암호화**: 모든 저장 데이터 암호화
+2. **타이머 검증**: 실시간 시간 조작 감지
+3. **복사 방지**: 시험 중 복사/붙여넣기 차단
+4. **개발자 도구 감지**: 콘솔 접근 모니터링
+5. **체크섬 검증**: 데이터 무결성 확인
 
 ---
 
-## 📅 버전 히스토리 & 로드맵
+## 🎓 학습 효과
 
-### 🎯 **현재 버전: v2.0** (2025.11.23)
-```
-🎊 메이저 업데이트: 평가 시스템 → 학습 지원 시스템
-
-✨ 새로운 기능:
-  ├── 🧠 실시간 학습 가이드 시스템
-  ├── 📊 누적 점수 트래커  
-  ├── 🎨 Ocean Blue 디자인 시스템
-  ├── 📱 완전 반응형 3열 레이아웃
-  └── 📚 2,889줄 완전 문서화
-
-🔧 개선사항:
-  ├── 🚀 성능 최적화 (GPU 가속)
-  ├── ♿ 접근성 향상 (WCAG 2.1 AA)
-  ├── 💾 자동 저장 시스템 강화
-  └── 🎯 학습 완주형 점수 체계
-```
-
-### 🚀 **로드맵 (향후 계획)**
-
-#### 📅 **v2.1** (1-2개월 내)
-- [ ] 🌐 다국어 지원 (영어, 일본어)
-- [ ] 📊 학습 분석 대시보드
-- [ ] 🎯 난이도별 문제 분류  
-- [ ] 📈 개인 학습 통계
-
-#### 📅 **v3.0** (3-6개월 내)
-- [ ] 🔗 백엔드 API 연동 (Node.js)
-- [ ] 👤 사용자 인증 시스템
-- [ ] 🤝 실시간 협업 학습
-- [ ] 🧑‍🏫 교육자 대시보드
-
-#### 📅 **v4.0** (장기 비전)
-- [ ] 🤖 AI 튜터 시스템
-- [ ] 📱 모바일 네이티브 앱 
-- [ ] 🎓 다양한 교과목 지원
-- [ ] 🏫 LMS 플랫폼 통합
+- ✨ **즉각적 피드백**: 실시간 점수 확인
+- 📈 **진도 시각화**: 진행률 바와 문제 네비게이션
+- 💡 **상세 해설**: 모든 문제에 대한 설명 제공
+- 🎯 **목표 지향적**: 명확한 등급 시스템
 
 ---
 
-## 📜 라이선스 & 저작권
+## 🤝 기여 방법
 
-```
-MIT License
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Copyright (c) 2025 aebonlee
+---
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+## 📝 라이선스
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+MIT License - 자유롭게 사용, 수정, 배포 가능합니다.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+---
+
+## 📞 문의
+
+프로젝트 관련 문의나 버그 리포트는 [GitHub Issues](https://github.com/aebonlee/web_final/issues)를 통해 제출해 주세요.
 
 ---
 
 <div align="center">
-
-## 🌟 **프로젝트가 도움이 되셨나요?** 
-
-**⭐ Star를 눌러주시면 개발에 큰 힘이 됩니다!**
-
-[![GitHub stars](https://img.shields.io/github/stars/aebonlee/web_final?style=social)](https://github.com/aebonlee/web_final/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/aebonlee/web_final?style=social)](https://github.com/aebonlee/web_final/network)
-[![GitHub watchers](https://img.shields.io/github/watchers/aebonlee/web_final?style=social)](https://github.com/aebonlee/web_final/watchers)
-
----
-
-### 💝 **"평가에서 학습으로의 혁신적 전환"** 
-
-**🎯 학습자의 성공이 곧 우리의 성공입니다** 🚀
-
-Made with 💙 by [aebonlee](https://github.com/aebonlee) & [Claude Code AI](https://claude.ai/code)
-
+Made with ❤️ for Web Programming Education
+<br>
+© 2024 Web Programming Learning Support System
 </div>

@@ -891,6 +891,18 @@ header h1 {
     color: var(--success-color);
 }
 
+.score-grade.perfect {
+    color: #fbbf24;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+    to { text-shadow: 0 0 20px rgba(251, 191, 36, 0.8), 0 0 30px rgba(251, 191, 36, 0.6); }
+}
+
 .score-grade.fail {
     color: var(--danger-color);
 }

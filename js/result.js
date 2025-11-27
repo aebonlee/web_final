@@ -28,16 +28,20 @@ function gradeExam(answers) {
         let isCorrect = false;
         
         if (question.type === 'multiple') {
-            // 객관식 채점 - 답안을 선택했으면 정답으로 처리 (학습 지원)
+            // 객관식 채점 - 실제 정답과 비교
             if (userAnswer !== undefined && userAnswer !== null) {
-                isCorrect = true;
-                multipleCorrect++;
+                isCorrect = (userAnswer === question.answer);
+                if (isCorrect) {
+                    multipleCorrect++;
+                }
             }
         } else {
-            // 단답식 채점 - 답안을 작성했으면 정답으로 처리 (학습 지원)
+            // 단답식 채점 - 정답과 비교 (대소문자 구분 없이, 앞뒤 공백 제거)
             if (userAnswer && userAnswer.trim() !== '') {
-                isCorrect = true;
-                shortCorrect++;
+                isCorrect = validateShortAnswer(userAnswer, question.answer);
+                if (isCorrect) {
+                    shortCorrect++;
+                }
             }
         }
         
@@ -48,7 +52,7 @@ function gradeExam(answers) {
         });
     });
     
-    // 점수 계산: 답변한 문제당 2점씩 누적 (최대 100점)
+    // 점수 계산: 정답 문제당 2점씩 누적 (최대 100점)
     const totalScore = (multipleCorrect + shortCorrect) * 2;
     
     return {
@@ -57,6 +61,38 @@ function gradeExam(answers) {
         shortCorrect: shortCorrect,
         detailedResults: detailedResults
     };
+}
+
+// 단답형 답안 검증 함수
+function validateShortAnswer(userAnswer, correctAnswer) {
+    // 기본 처리: 대소문자 구분 없이, 앞뒤 공백 제거
+    const normalizedUser = userAnswer.trim().toLowerCase();
+    const normalizedCorrect = correctAnswer.trim().toLowerCase();
+    
+    // 완전 일치 검사
+    if (normalizedUser === normalizedCorrect) {
+        return true;
+    }
+    
+    // 배열 형태의 정답 (여러 정답이 가능한 경우)
+    if (Array.isArray(correctAnswer)) {
+        return correctAnswer.some(answer => 
+            normalizedUser === answer.trim().toLowerCase()
+        );
+    }
+    
+    // 부분 매칭 (핵심 키워드 포함 여부)
+    // 예: "let, const" 정답에 "let"만 써도 부분 점수
+    const keywords = normalizedCorrect.split(/[,\s]+/).filter(k => k.length > 0);
+    const userKeywords = normalizedUser.split(/[,\s]+/).filter(k => k.length > 0);
+    
+    // 모든 핵심 키워드가 포함되어 있는지 확인
+    const matchRate = keywords.filter(keyword => 
+        userKeywords.some(userWord => userWord.includes(keyword) || keyword.includes(userWord))
+    ).length / keywords.length;
+    
+    // 70% 이상 일치하면 정답으로 처리
+    return matchRate >= 0.7;
 }
 
 function displayResults(results, examData) {
@@ -94,7 +130,10 @@ function displayResults(results, examData) {
     
     // 등급 판정 - 실제 점수에 따른 등급 부여
     const gradeElement = document.getElementById('scoreGrade');
-    if (results.totalScore >= 90) {
+    if (results.totalScore === 100) {
+        gradeElement.textContent = 'S (완벽)';
+        gradeElement.className = 'score-grade perfect';
+    } else if (results.totalScore >= 90) {
         gradeElement.textContent = 'A (우수)';
         gradeElement.className = 'score-grade pass';
     } else if (results.totalScore >= 80) {
@@ -104,7 +143,7 @@ function displayResults(results, examData) {
         gradeElement.textContent = 'C (합격)';
         gradeElement.className = 'score-grade pass';
     } else {
-        gradeElement.textContent = 'D (불합격)';
+        gradeElement.textContent = 'D (재학습 필요)';
         gradeElement.className = 'score-grade fail';
     }
     

@@ -248,6 +248,10 @@ function updateTimerDisplay() {
 }
 
 function saveAnswers() {
+    // 보안 저장소 사용
+    SecureStorage.setItem('examAnswers', examAnswers);
+    SecureStorage.setItem('timeLeft', timeLeft);
+    // 일반 localStorage에도 백업 (호환성)
     localStorage.setItem('examAnswers', JSON.stringify(examAnswers));
     localStorage.setItem('timeLeft', timeLeft.toString());
 }
