@@ -183,22 +183,52 @@ function displayQuestion(index) {
 
 function updateNavigation() {
     const allNavBtns = document.querySelectorAll('.nav-btn');
+    let answeredCount = 0;
+    let correctCount = 0;
     
     allNavBtns.forEach((btn, i) => {
-        btn.classList.remove('current', 'answered');
+        btn.classList.remove('current', 'answered', 'correct', 'incorrect');
+        
+        const question = questions[i];
+        const userAnswer = examAnswers[question.id];
         
         if (i === currentQuestion) {
             btn.classList.add('current');
-        } else if (examAnswers[questions[i].id] !== undefined && examAnswers[questions[i].id] !== '') {
+        }
+        
+        if (userAnswer !== undefined && userAnswer !== null && userAnswer !== '') {
+            answeredCount++;
             btn.classList.add('answered');
+            
+            // 정답 여부 확인하여 색상 표시
+            let isCorrect = false;
+            
+            if (question.type === 'multiple') {
+                isCorrect = (userAnswer === question.answer);
+            } else {
+                const normalizedUser = userAnswer.toString().trim().toLowerCase();
+                const normalizedCorrect = question.answer.toString().trim().toLowerCase();
+                
+                if (normalizedUser === normalizedCorrect) {
+                    isCorrect = true;
+                } else if (question.keywords && question.keywords.length > 0) {
+                    isCorrect = question.keywords.some(keyword => 
+                        normalizedUser === keyword.toLowerCase()
+                    );
+                }
+            }
+            
+            if (isCorrect) {
+                btn.classList.add('correct');
+                correctCount++;
+            } else {
+                btn.classList.add('incorrect');
+            }
         }
     });
     
     // 진행률 업데이트
-    const answeredCount = Object.keys(examAnswers).filter(key => 
-        examAnswers[key] !== undefined && examAnswers[key] !== ''
-    ).length;
-    document.getElementById('progressText').textContent = `${answeredCount}/50`;
+    document.getElementById('progressText').textContent = `${correctCount}/${answeredCount}/50`;
 }
 
 function goToQuestion(index) {
@@ -465,18 +495,49 @@ function toggleGuide() {
     }
 }
 
-// 실시간 점수 업데이트 함수
+// 실시간 점수 업데이트 함수 - 정답만 점수에 반영
 function updateScoreTracker() {
-    const answeredCount = Object.keys(examAnswers).filter(key => 
-        examAnswers[key] !== undefined && examAnswers[key] !== ''
-    ).length;
+    let correctCount = 0;
+    let answeredCount = 0;
     
-    const currentScore = answeredCount * 2;
+    // 각 답변이 정답인지 확인
+    questions.forEach(question => {
+        const userAnswer = examAnswers[question.id];
+        
+        if (userAnswer !== undefined && userAnswer !== null && userAnswer !== '') {
+            answeredCount++;
+            
+            if (question.type === 'multiple') {
+                // 객관식: 정답 확인
+                if (userAnswer === question.answer) {
+                    correctCount++;
+                }
+            } else {
+                // 단답식: 기본적인 정답 확인
+                const normalizedUser = userAnswer.toString().trim().toLowerCase();
+                const normalizedCorrect = question.answer.toString().trim().toLowerCase();
+                
+                if (normalizedUser === normalizedCorrect) {
+                    correctCount++;
+                } else if (question.keywords && question.keywords.length > 0) {
+                    // 키워드 방식 체크
+                    const isCorrect = question.keywords.some(keyword => 
+                        normalizedUser === keyword.toLowerCase()
+                    );
+                    if (isCorrect) {
+                        correctCount++;
+                    }
+                }
+            }
+        }
+    });
+    
+    const currentScore = correctCount * 2; // 정답만 점수에 반영
     const progressPercentage = (currentScore / 100) * 100;
     
     // 점수 표시 업데이트
     document.getElementById('currentScore').textContent = currentScore;
-    document.getElementById('answeredCount').textContent = answeredCount;
+    document.getElementById('answeredCount').textContent = `${correctCount}/${answeredCount}`;
     
     // 프로그레스 바 업데이트
     const scoreBar = document.getElementById('scoreBar');
