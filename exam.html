@@ -92,12 +92,21 @@
         <!-- 제출 확인 모달 -->
         <div id="submitModal" class="modal">
             <div class="modal-content">
-                <h3>시험 제출</h3>
+                <h3>🎯 시험 제출 확인</h3>
                 <p>정말로 시험을 제출하시겠습니까?</p>
-                <p class="warning">제출 후에는 답안을 수정할 수 없습니다.</p>
+                <p class="warning">⚠️ 제출 후에는 답안을 수정할 수 없습니다.</p>
                 <div class="modal-stats">
-                    <p>답변한 문제: <span id="answeredCount">0</span>/50</p>
-                    <p>미답변 문제: <span id="unansweredCount">50</span>개</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                        <p>📝 답변한 문제: <span id="answeredCount" style="font-weight: bold;">0</span>/50</p>
+                        <p>❓ 미답변 문제: <span id="unansweredCount" style="font-weight: bold; color: #f59e0b;">50</span>개</p>
+                        <p>✅ 정답: <span id="correctCount" style="color: #10b981; font-weight: bold;">0</span>개</p>
+                        <p>❌ 오답: <span id="incorrectCount" style="color: #ef4444; font-weight: bold;">0</span>개</p>
+                    </div>
+                    <div style="padding: 10px; background: #f0f9ff; border-radius: 8px; margin-top: 10px;">
+                        <p style="font-size: 1.1em; text-align: center; margin: 0;">
+                            💯 예상 점수: <span id="expectedScore" style="color: #0ea5e9; font-weight: bold; font-size: 1.2em;">0</span>점
+                        </p>
+                    </div>
                 </div>
                 <div class="modal-buttons">
                     <button id="confirmSubmit" class="btn-confirm">제출</button>

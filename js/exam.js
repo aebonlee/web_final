@@ -313,13 +313,67 @@ function showSaveIndicator() {
 }
 
 function showSubmitModal() {
-    const answeredCount = Object.keys(examAnswers).filter(key => 
-        examAnswers[key] !== undefined && examAnswers[key] !== ''
-    ).length;
-    const unansweredCount = 50 - answeredCount;
+    let answeredCount = 0;
+    let correctCount = 0;
+    let incorrectCount = 0;
     
+    // 각 문제별로 답변 상태 확인
+    questions.forEach(question => {
+        const userAnswer = examAnswers[question.id];
+        
+        if (userAnswer !== undefined && userAnswer !== null && userAnswer !== '') {
+            answeredCount++;
+            
+            // 정답 여부 확인
+            let isCorrect = false;
+            
+            if (question.type === 'multiple') {
+                isCorrect = (userAnswer === question.answer);
+            } else {
+                const normalizedUser = userAnswer.toString().trim().toLowerCase();
+                const normalizedCorrect = question.answer.toString().trim().toLowerCase();
+                
+                if (normalizedUser === normalizedCorrect) {
+                    isCorrect = true;
+                } else if (question.keywords && question.keywords.length > 0) {
+                    isCorrect = question.keywords.some(keyword => 
+                        normalizedUser === keyword.toLowerCase()
+                    );
+                }
+            }
+            
+            if (isCorrect) {
+                correctCount++;
+            } else {
+                incorrectCount++;
+            }
+        }
+    });
+    
+    const unansweredCount = 50 - answeredCount;
+    const expectedScore = correctCount * 2;
+    
+    // 모달에 정보 표시
     document.getElementById('answeredCount').textContent = answeredCount;
     document.getElementById('unansweredCount').textContent = unansweredCount;
+    document.getElementById('correctCount').textContent = correctCount;
+    document.getElementById('incorrectCount').textContent = incorrectCount;
+    document.getElementById('expectedScore').textContent = expectedScore;
+    
+    // 미답변 문제가 있을 경우 경고 색상 강조
+    if (unansweredCount > 0) {
+        document.getElementById('unansweredCount').style.color = '#f59e0b';
+        
+        // 미답변 문제가 10개 이상이면 추가 경고
+        if (unansweredCount >= 10) {
+            const warning = document.querySelector('.modal-content .warning');
+            if (warning && !warning.textContent.includes('미답변')) {
+                warning.innerHTML = '⚠️ 제출 후에는 답안을 수정할 수 없습니다.<br>' +
+                                   `<span style="color: #ef4444;">⚠️ ${unansweredCount}개의 문제를 답변하지 않았습니다!</span>`;
+            }
+        }
+    }
+    
     document.getElementById('submitModal').classList.add('show');
 }
 
